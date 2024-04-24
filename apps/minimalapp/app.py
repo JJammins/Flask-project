@@ -91,7 +91,7 @@ def contact_complete():
         description = request.form["description"]
         print(username, email, description)
 
-        # 입력 체크
+        # 유효성 검사 파트
         is_valid = True
         if not username:
             flash("사용자명은 필수입니다")
@@ -100,7 +100,7 @@ def contact_complete():
             flash("메일 주소는 필수입니다")
             is_valid = False
         try:
-            validate_email(email)
+            validate_email(email) # 이메일 형식 검사
         except EmailNotValidError:
             flash("메일 주소의 형식으로 입력해 주세요")
             is_valid = False
@@ -112,11 +112,11 @@ def contact_complete():
         
         # 이메일을 보낸다
         send_email(
-            email,
-            "문의 감사합니다.",
-            "contact_mail",
-            username=username,
-            description=description,
+            email, # 이메일 주소
+            "문의 감사합니다.", # 이메일 제목
+            "contact_mail", # 이메일의 내용의 템플릿
+            username=username, # 사용자명
+            description=description, # 문의 내용
         )
 
         # contact 엔드포인트로 리다이렉트한다
@@ -125,6 +125,7 @@ def contact_complete():
     
     return render_template("contact_complete.html")
 
+# 이메일 보내기 위해서 API 사용하는 함수
 def send_email(to, subject, template, **kwargs):
     """메일을 송신하는 함수"""
     msg = Message(subject, recipients=[to])
