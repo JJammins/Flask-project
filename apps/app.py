@@ -3,13 +3,15 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect # 폼의 확장 기능 import
+from apps.config import config
 
 db = SQLAlchemy()
 csrf = CSRFProtect() # 폼의 확장기능 인스턴스화
-def create_app() :
+def create_app(config_key) :
 
     app = Flask(__name__)
-
+    # config_key에 매치하는 환경의 config 클래스를 읽어들인다
+    app.config.from_object(config[config_key])
     app.config.from_mapping(
         SECRET_KEY="sksms12qkqh34dpdy",
         SQLALCHEMY_DATABASE_URI=

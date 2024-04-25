@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사용자 편집</title>
-    <link rel="stylesheet" href="{{ url_for('crud.static', filename='style.css') }}">
-</head>
-<body>
+{% extends 'crud/base.html' %}
+{% block title %}사용자 편집{% endblock %}
+{% block content %}
     <h2>사용자 편집</h2>
     <form
         action="{{ url_for('crud.edit_user', user_id=user.id) }}"
@@ -37,5 +31,4 @@
         {{ form.csrf_token }}
         <input type="submit" value="삭제">
     </form>
-</body>
-</html>
+{% endblock %}
